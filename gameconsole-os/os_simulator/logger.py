@@ -115,6 +115,7 @@ def print_metrics_table(processes: list):
 
     total_turnaround = 0
     total_wait = 0
+    total_first_response = 0
     count = 0
 
     for p in processes:
@@ -123,6 +124,8 @@ def print_metrics_table(processes: list):
         turnaround = p.end_tick - p.start_tick
         total_turnaround += turnaround
         total_wait += p.wait_time
+        if p.first_response_tick != -1:
+            total_first_response += p.first_response_tick
         count += 1
         first_r = str(p.first_response_tick) if p.first_response_tick != -1 else "-"
         table.add_row(
@@ -141,7 +144,7 @@ def print_metrics_table(processes: list):
             "[bold]Average[/bold]", "-", "-", "-",
             f"[bold yellow]{total_turnaround / count:.1f}[/bold yellow]",
             f"[bold red]{total_wait / count:.1f}[/bold red]",
-            "-",
+            f"[bold magenta]{total_first_response / count:.1f}[/bold magenta]",
         )
 
     console.print(table)
