@@ -1,0 +1,1 @@
+# Exports public symbols for the OS simulator package
