@@ -80,7 +80,13 @@ def run_simulation(mode: str) -> list:
         pcb = scheduler.next_process()
         if pcb is None:
             break
+            
         finished = scheduler.tick(pcb)
+        
+        print_process_table(pm.list_all_processes())
+        print_memory_table(mm.frames)
+        print("-" * 50)
+        
         if finished:
             mm.deallocate(pcb)
             pm.terminate_process(pcb.pid)
